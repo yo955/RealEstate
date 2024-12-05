@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import AddImageButton from "./components/AddImageButton";
 import UploadCareButton from "./components/UploadCare";
-import filestack from "filestack-js";
+import * as filestack from 'filestack-js';
 import { useRouter } from "next/router";
 import { redirect } from "next/dist/server/api-utils";
 import { TbLoader, TbLoader2 } from "react-icons/tb";
@@ -35,15 +35,15 @@ const AddProductPage = () => {
   useEffect(() => {}, [additionalImagesRef]);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if(name === "map"){
-      setProduct({...product,map:value?.split(/src="/)[1]?.split('"')[0]})
-    }else{
+    if (name === "map") {
+      setProduct({ ...product, map: value?.split(/src="/)[1]?.split('"')[0] });
+    } else {
       setProduct((prevProduct) => ({
         ...prevProduct,
         [name.toLowerCase()]: value,
       }));
     }
-    console.log(product)
+    console.log(product);
   };
 
   const handleAdditionalImagesChange = (event) => {
@@ -81,37 +81,37 @@ const AddProductPage = () => {
     }
 
     try {
-      setisLoading(true)
+      setisLoading(true);
       await axios.post(`${apiUrl}/compound/add`, product, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
         withCredentials: true,
       });
-      
+
       toast.success("Compound added successfully!");
-     window.location.pathname = "/dashpoard/products"
-      
+      window.location.pathname = "/dashpoard/products";
+
       setProduct({
         mainImage: "",
-    title: "",
-    location: "",
-    status: "available",
-    description: "",
-    address: "",
-    pdf: "",
-    map: "",
-    address: "",
+        title: "",
+        location: "",
+        status: "available",
+        description: "",
+        address: "",
+        pdf: "",
+        map: "",
+        address: "",
       });
       setMainImage(null);
       setAdditionalImages([]);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       console.error("Error adding apartment:", error);
       console.error("Response data:", error?.response?.data);
       toast.error(error?.response?.data.error);
-    }finally{
-      setisLoading(false)
+    } finally {
+      setisLoading(false);
     }
   };
 
@@ -233,11 +233,17 @@ const AddProductPage = () => {
             rows={5}
             style={{ direction: "rtl" }}
           ></textarea>
-          <button type="submit">{isLoading?
-          <div className="w-full flex justify-center items-center">
-            <div style={{scale:1.6}} className="animate-spin"><TbLoader2 /></div>
-          </div>
-          :"Add Compound"}</button>
+          <button type="submit">
+            {isLoading ? (
+              <div className="w-full flex justify-center items-center">
+                <div style={{ scale: 1.6 }} className="animate-spin">
+                  <TbLoader2 />
+                </div>
+              </div>
+            ) : (
+              "Add Compound"
+            )}
+          </button>
         </form>
       </div>
     </section>

@@ -8,7 +8,7 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UploadCareButton from "../add/components/UploadCare";
-
+import { TbLoader2 } from "react-icons/tb";
 const SingleProductPage = () => {
   const { id } = useParams();
   const [isloading, setisloading] = useState(false);
